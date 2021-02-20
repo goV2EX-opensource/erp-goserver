@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"example.com/go-v2ex/dbutil"
-	"example.com/go-v2ex/global"
-	"example.com/go-v2ex/migrate"
+	"v2ex/go-erp/dbutil"
+	"v2ex/go-erp/global"
+	"v2ex/go-erp/migrate"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -25,8 +25,9 @@ func main() {
 	})
 	global.Loadconf()
 	dbutil.Setup()
-	migrate.CheckSalt()
-	migrate.CheckSysAdmin()
+
+	migrate.Begin()
+	migrate.Upgrade()
 
 	port := fmt.Sprintf(":%d", global.ListenPort)
 	log.Info(fmt.Sprintf("***WEBSERVER WILL LISTEN ON PORT :%d ***", global.ListenPort))

@@ -3,7 +3,7 @@ package util
 import (
 	"fmt"
 
-	"example.com/go-v2ex/global"
+	"v2ex/go-erp/global"
 )
 
 //SysPass : System administrator password hash

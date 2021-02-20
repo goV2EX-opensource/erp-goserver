@@ -5,7 +5,8 @@ import (
 
 	"time"
 
-	"example.com/go-v2ex/global"
+	"v2ex/go-erp/global"
+
 	"gorm.io/driver/mysql"
 	_ "gorm.io/driver/mysql"
 	"gorm.io/gorm"

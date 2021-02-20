@@ -1,4 +1,4 @@
-module example.com/go-v2ex
+module v2ex/go-erp
 
 go 1.16
 

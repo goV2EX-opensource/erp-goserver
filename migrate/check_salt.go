@@ -7,9 +7,10 @@ import (
 	log "github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 
-	"example.com/go-v2ex/dbutil"
-	"example.com/go-v2ex/global"
-	"example.com/go-v2ex/util"
+	"v2ex/go-erp/dbutil"
+	"v2ex/go-erp/global"
+	"v2ex/go-erp/util"
+
 	"github.com/lifei6671/gorand"
 )
 

@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"example.com/go-v2ex/dbutil"
-	"example.com/go-v2ex/global"
-	"example.com/go-v2ex/util"
+	"v2ex/go-erp/dbutil"
+	"v2ex/go-erp/global"
+	"v2ex/go-erp/util"
+
 	log "github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
@@ -40,5 +41,52 @@ func CheckSysAdmin() {
 		} else {
 			log.Info("First sys admin generated!")
 		}
+	}
+}
+
+//User 用户表
+type User struct {
+	ID        uint32 `gorm:"primary_key;type:INT UNSIGNED NOT NULL AUTO_INCREMENT"`
+	Username  string `gorm:"type:varchar(30);not null;unique"`
+	Password  string `gorm:"type:varchar(32);not null"`
+	Name      string `gorm:"type:varchar(8);not null"`
+	Status    uint8  `gorm:"type:tinyint unsigned not null;default:1"`
+	DepartID  uint32 `gorm:"type:INT UNSIGNED NOT NULL;index;"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
+}
+
+//DepartDic 用户部门词典表
+type DepartDic struct {
+	ID       uint32 `gorm:"primary_key;type:INT UNSIGNED NOT NULL AUTO_INCREMENT"`
+	Name     string `gorm:"type:varchar(32);not null"`
+	Total    uint16 `gorm:"type:MEDIUMINT UNSIGNED NOT NULL"`
+	ParentID uint32 `gorm:"type:INT UNSIGNED NOT NULL;index"`
+}
+
+//Group 用户权限组表
+type Group struct {
+	ID        uint32 `gorm:"primary_key;type:INT UNSIGNED NOT NULL AUTO_INCREMENT"`
+	GroupName string `gorm:"type:varchar(30);not null;unique"`
+}
+
+//CheckUser 确认系统用户相关表情况
+func CheckUser() {
+	db := dbutil.GetDB()
+	if !db.Migrator().HasTable(&User{}) {
+		log.Info("NO User TABLE. PREPARE INIT ONE.")
+		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&User{})
+		log.Info("User table inited")
+	}
+	if !db.Migrator().HasTable(&DepartDic{}) {
+		log.Info("NO DepartDic TABLE. PREPARE INIT ONE.")
+		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&DepartDic{})
+		log.Info("DepartDic table inited")
+	}
+	if !db.Migrator().HasTable(&Group{}) {
+		log.Info("NO Group TABLE. PREPARE INIT ONE.")
+		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&Group{})
+		log.Info("Group table inited")
 	}
 }
