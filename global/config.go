@@ -24,7 +24,7 @@ var UserSalt string
 
 //Loadconf : Load configuation file
 func Loadconf() {
-	config := goini.Load("app.ini")
+	config := goini.Load(ConfigINIPath)
 	confver := config.GetString("Ver", "app")
 
 	if len(confver) < 2 {
