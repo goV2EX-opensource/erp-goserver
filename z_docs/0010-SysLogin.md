@@ -32,7 +32,7 @@
 
 **详情：**
 
-- 用户登入
+- ### 用户登入 ###
 
 		URI: /superadm/login
 		METHOD: POST
@@ -65,7 +65,7 @@
 		2. 所有前后端传输密码均应在前端md5一次
 
 
-- 用户登出
+- ### 用户登出 ###
 
 		URI: /superadm/logout
 		METHOD: POST
@@ -73,6 +73,7 @@
 			c: (int) 一个随机数，大于0
 			c2: (int) c的二倍
 返回
+
 		Format: JSON
 
 		成功:
@@ -93,7 +94,7 @@
 		失败:
 			无操作
 
-- 超级用户修改本人密码
+- ### 超级用户修改本人密码 ###
 	
 		URI: /superadm/password
 			METHOD: POST
