@@ -57,8 +57,8 @@ type User struct {
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
-//DepartDic 用户部门词典表
-type DepartDic struct {
+//DicDepart 用户部门词典表
+type DicDepart struct {
 	ID       uint32 `gorm:"primary_key;type:INT UNSIGNED NOT NULL AUTO_INCREMENT"`
 	Name     string `gorm:"type:varchar(32);not null"`
 	Total    uint16 `gorm:"type:MEDIUMINT UNSIGNED NOT NULL"`
@@ -80,9 +80,9 @@ func CheckUser() {
 		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&User{})
 		log.Info("User table inited")
 	}
-	if !db.Migrator().HasTable(&DepartDic{}) {
+	if !db.Migrator().HasTable(&DicDepart{}) {
 		log.Info("NO DepartDic TABLE. PREPARE INIT ONE.")
-		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&DepartDic{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&DicDepart{})
 		log.Info("DepartDic table inited")
 	}
 	if !db.Migrator().HasTable(&Group{}) {
