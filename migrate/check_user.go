@@ -12,8 +12,8 @@ import (
 	"gorm.io/gorm"
 )
 
-//SysUser : 系统管理员数据库结构
-type SysUser struct {
+//SuperUser : 系统管理员数据库结构
+type SuperUser struct {
 	ID        uint16 `gorm:"primary_key;type:MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT"`
 	Uname     string `gorm:"type:varchar(30);not null;unique"`
 	Upass     string `gorm:"type:varchar(32);not null"`
@@ -26,15 +26,15 @@ type SysUser struct {
 //CheckSysAdmin 确认系统初始管理员表是否存在，如果不存在新建并添加一个管理员
 func CheckSysAdmin() {
 	db := dbutil.GetDB()
-	if !db.Migrator().HasTable(&SysUser{}) {
+	if !db.Migrator().HasTable(&SuperUser{}) {
 		log.Info("NO SYSADMIN TABLE. PREPARE INIT ONE.")
-		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&SysUser{})
+		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&SuperUser{})
 		log.Info("SYSADMIN table inited")
 
 		newstr := fmt.Sprintf("%s-!-%s", "root", global.SysSalt)
 		newpass := util.Md5s(newstr)
 
-		sysUserObj := SysUser{Uname: "sysadmin", Upass: newpass, Ustat: 1}
+		sysUserObj := SuperUser{Uname: "sysadmin", Upass: newpass, Ustat: 1}
 		result := db.Create(&sysUserObj)
 		if result.RowsAffected != 1 {
 			log.Fatal("INIT ADMIN ERROR")
