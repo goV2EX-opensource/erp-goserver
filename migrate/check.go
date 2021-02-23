@@ -84,6 +84,12 @@ func CheckUser() {
 		log.Info("NO DepartDic TABLE. PREPARE INIT ONE.")
 		db.Set("gorm:table_options", "ENGINE=InnoDB").AutoMigrate(&DicDepart{})
 		log.Info("DepartDic table inited")
+
+		log.Info("Trying to generate DepartDic base data")
+		var depObj DicDepart
+		depObj = DicDepart{ID: 1, Name: "总部直属", Total: 0, ParentID: 1}
+		_ = db.Create(&depObj)
+		log.Info("Done: DepartDic base data")
 	}
 	if !db.Migrator().HasTable(&Group{}) {
 		log.Info("NO Group TABLE. PREPARE INIT ONE.")
