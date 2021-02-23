@@ -5,6 +5,7 @@ func Begin() {
 	CheckSalt()
 	CheckSysAdmin()
 	CheckUser()
+	CheckATD()
 }
 
 //Upgrade : 升级PATCH数据库

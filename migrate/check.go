@@ -73,6 +73,7 @@ type Group struct {
 
 //CheckUser 确认系统用户相关表情况
 func CheckUser() {
+	log.Info("Checking User table")
 	db := dbutil.GetDB()
 	if !db.Migrator().HasTable(&User{}) {
 		log.Info("NO User TABLE. PREPARE INIT ONE.")
